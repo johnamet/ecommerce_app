@@ -7,6 +7,7 @@ import router from './routes';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import PrettyPrint from './middlewares/PrettyPrint';
 
 const app = express();
 
@@ -16,18 +17,7 @@ const corsOptions = {
     allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
 };
 
-app.use((req, res, next) => {
-    const originalSend = res.send;
-    res.send = function (body) {
-        if (typeof body === 'object') {
-            body = JSON.stringify(body, null, 2); // Pretty-print with 4 spaces
-            res.setHeader('Content-Type', 'application/json');
-        }
-        originalSend.call(this, body);
-    };
-    next();
-});
-
+app.use(PrettyPrint.printPretty);
 
 app.use(express.json());
 
