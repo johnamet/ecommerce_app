@@ -14,31 +14,25 @@
   "author": "John Ametepe Agboku",
   "license": "ISC",
   "dependencies": {
-    "bull": "^3.16.0",
-    "chai-http": "^4.3.0",
+    "bull": "^4.16.3",
     "express": "^4.21.0",
-    "image-thumbnail": "^1.0.10",
-    "mime-types": "^2.1.27",
-    "mongodb": "^3.5.9",
-    "redis": "^4.7.0",
-    "sha1": "^1.1.1",
-    "uuid": "^8.2.0"
+    "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
-    "@babel/cli": "^7.8.0",
-    "@babel/core": "^7.8.0",
-    "@babel/node": "^7.8.0",
-    "@babel/preset-env": "^7.8.2",
-    "@babel/register": "^7.8.0",
-    "chai": "^4.2.0",
+    "@babel/cli": "^7.25.6",
+    "@babel/core": "^7.25.2",
+    "@babel/node": "^7.25.0",
+    "@babel/preset-env": "^7.25.4",
+    "@babel/register": "^7.24.6",
+    "chai": "^5.1.1",
     "chai-http": "^4.3.0",
-    "eslint": "^6.4.0",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-plugin-import": "^2.18.2",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.30.0",
     "eslint-plugin-jest": "^28.8.3",
     "mocha": "^10.7.3",
-    "nodemon": "^2.0.2",
-    "request": "^2.88.0",
-    "sinon": "^7.5.0"
+    "nodemon": "^3.1.7",
+    "request": "^2.88.2",
+    "sinon": "^19.0.2"
   }
 }

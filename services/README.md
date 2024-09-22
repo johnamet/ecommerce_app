@@ -193,3 +193,32 @@ The project uses **GitHub Actions** for continuous integration and deployment:
 - Unit tests and linting run on each pull request.
 - Docker containers are built and pushed to a container registry on each successful merge to `main`.
 - The services are deployed to **Kubernetes** clusters managed by **AWS EKS**.
+
+
+"dependencies": {
+    "bull": "^3.16.0",
+    "chai-http": "^4.3.0",
+    "express": "^4.21.0",
+    "mime-types": "^2.1.27",
+    "mongodb": "^3.5.9",
+    "redis": "^2.8.0",
+    "sha1": "^1.1.1",
+    "uuid": "^8.2.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.0",
+    "@babel/core": "^7.8.0",
+    "@babel/node": "^7.8.0",
+    "@babel/preset-env": "^7.8.2",
+    "@babel/register": "^7.8.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "eslint": "^6.4.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^22.17.0",
+    "mocha": "^6.2.2",
+    "nodemon": "^2.0.2",
+    "request": "^2.88.0",
+    "sinon": "^7.5.0"
+  }
