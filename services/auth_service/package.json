@@ -1,0 +1,14 @@
+{
+  "name": "auth_service",
+  "version": "1.0.0",
+  "description": "An authentication service for the ecommerce app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "John Ametepe Agboku",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}
