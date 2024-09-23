@@ -3,6 +3,7 @@ import { configDotenv } from 'dotenv';
 import admin, { auth } from 'firebase-admin';
 import jwt, { JsonWebTokenError, TokenExpiredError } from 'jsonwebtoken';
 import cache from '../utils/redisUtil';
+import TokenUtil from '../utils/tokensUtil';
 
 configDotenv();
 
@@ -20,8 +21,8 @@ class TokenVerification{
 
         if(!firebaseToken){
             return res.status(401).send({
-                error: "Unauthorised error. No valid firebase \
-                token has been provided"
+                error: "Unauthorised error. No valid firebase "+
+                "token has been provided"
             });
         }
 
@@ -54,7 +55,7 @@ class TokenVerification{
      * @returns {Response} - An express response
      */
     static async verifyAccessToken(req, res, next) {
-        const accessToken = req.headers.authorization?.split("Bearer ")[1];
+        const accessToken = req.headers.authorisation?.split("Bearer ")[1];
     
         if (!accessToken) {
             return res.status(401).json({
@@ -96,12 +97,21 @@ class TokenVerification{
      * @returns {Response} - An express response
      */
     static async verifyRefreshToken(req, res, next){
+        const refreshToken = req.headers.refreshToken;
 
+        const blackListed = await cache.get(`invalidated-${refreshToken}`);
+
+        if (blackListed){
+            return res.status(401).send({
+                error: "Unauthorised error.",
+                message: "Invalidated Refresh token"
+            });
+        }
+        
         if(req.verified === true && req.uid){
             return next();
         }
 
-        const refreshToken = req.headers.refreshToken;
 
         if (!refreshToken){
             return res.status(401).send({
@@ -144,15 +154,15 @@ class TokenVerification{
             const cachedAccessToken = await cache.get(`cached-${req.headers.authorization}`);
             if (cachedAccessToken) {
                 req.authorization = `Bearer ${cachedAccessToken}`;
-                return next(); // Use cached access token
+                return this.authorizationMiddleware(req, res, next); // Use cached access token
             }
     
             TokenVerification.verifyRefreshToken(req, res, next); // Verify refresh token
-            const newAccessToken = jwt.sign({
+            const newAccessToken =  TokenUtil.createAccessToken({
                 uid: req.decodeData.uid,
                 role: req.decodeData.role,
                 email: req.decodeData.email
-            }, process.env.JWT_SECRET, { expiresIn: '1h' });
+            });
     
             // Cache the new access token
             await cache.set(`cached-${newAccessToken}`, newAccessToken);
@@ -163,6 +173,7 @@ class TokenVerification{
     
             return next(); // Continue to the next route
         } catch (error) {
+            console.error(error);
             return res.status(401).send({
                 error: "Unauthorized error.",
                 message: "Invalid refresh token."
