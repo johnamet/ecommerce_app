@@ -1,3 +1,6 @@
 services/auth_service/node_modules
-credentials/storeapp-1fd02-firebase-adminsdk-z7cis-4a3d069c23.json
+credentials/*
 services/auth_service/.env
+services/user_service/.env
+services/user_service/app_env
+services/auth_service/package-lock.json

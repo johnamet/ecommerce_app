@@ -1,6 +1,6 @@
 import admin from 'firebase-admin';
 import cache from '../utils/redis';
-import TokenUtil from '../utils/tokensUtil';
+import TokenUtil from '../utils/tokens';
 
 class AuthController {
     /**
@@ -39,7 +39,9 @@ class AuthController {
 
                 await cache.set(refreshToken, refreshToken, 60*60*30);
 
-                return res.status(200).json({ accessToken, refreshToken });
+                return res.status(200).json({message: "User authorised",
+                     accessToken,
+                      refreshToken });
             } else {
                 return res.status(401).json({
                     error: "Unauthorized",

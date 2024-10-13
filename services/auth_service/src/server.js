@@ -9,7 +9,19 @@ import FirebaseUtil from './utils/firebase';
 import generalRoutes from './routes';
 import authRoutes from './routes/auth';
 
+
+// const file = './docs/swagger.yaml';
+
+
+// const swaggerUi = require('swagger-ui-express');
+// const yamljs = require('yamljs');
+// const swaggerDocument = yamljs.load(file);
+
 const app = express();
+
+
+// Use swagger-ui-express middleware to serve your Swagger docs
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // Security and logging middlewares
 app.use(cors({ origin: '*', methods: ['GET', 'POST', 'PUT', 'DELETE'], allowedHeaders: ['Content-Type', 'Authorization'] }));

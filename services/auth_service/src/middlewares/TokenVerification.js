@@ -1,5 +1,5 @@
 import admin from 'firebase-admin';
-import TokenUtil from '../utils/tokensUtil';
+import TokenUtil from '../utils/tokens';
 
 class TokenVerification {
     /**
