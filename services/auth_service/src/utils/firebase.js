@@ -2,6 +2,7 @@
 
 import { initializeApp, cert } from "firebase-admin/app";
 import { configDotenv } from "dotenv";
+import { auth } from "firebase-admin";
 
 configDotenv();
 

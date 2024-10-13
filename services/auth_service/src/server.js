@@ -1,34 +1,35 @@
-#!/usr/bin/node
-/**
- * The server of the authentication service
- */
 import express from 'express';
-import router from './routes';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import PrettyPrint from './middlewares/PrettyPrint';
-import FirebaseUtil from './utils/firebaseUtil';
+import bodyParser from 'body-parser';
 
-const firebaseUtil = new FirebaseUtil();
+import PrettyPrint from './middlewares/PrettyPrint';
+import FirebaseUtil from './utils/firebase';
+import generalRoutes from './routes';
+import authRoutes from './routes/auth';
 
 const app = express();
 
-const corsOptions = {
-    origin: '*', // Allows all origins
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowable methods
-    allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
-};
-
-app.use(PrettyPrint.printPretty);
-
-app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-
-app.use('/auth', router);
-app.use('/auth', cors(corsOptions))
+// Security and logging middlewares
+app.use(cors({ origin: '*', methods: ['GET', 'POST', 'PUT', 'DELETE'], allowedHeaders: ['Content-Type', 'Authorization'] }));
 app.use(helmet());
 app.use(morgan('tiny'));
+
+// Pretty-print responses
+app.use(PrettyPrint.printPretty);
+
+// Parsing middlewares
+app.use(express.json());
+app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Initialize Firebase once
+new FirebaseUtil();
+
+// Define routes
+app.use('/auth', authRoutes);
+app.use('/', generalRoutes);
 
 const PORT = process.env.PORT || 5000;
 const HOST = process.env.HOST || 'localhost';
@@ -36,3 +37,5 @@ const HOST = process.env.HOST || 'localhost';
 app.listen(PORT, HOST, () => {
     console.log(`Auth service running on ${HOST}:${PORT}`);
 });
+
+export default app;

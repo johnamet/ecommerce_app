@@ -1,6 +1,6 @@
 #!/usr/bin/node
 
-import cache from "../utils/redisUtil";
+import cache from "../utils/redis";
 
 
 class AppController{
